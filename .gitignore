@@ -69,8 +69,11 @@ venv.bak/
 
 # Project specific
 output/cvs/*.pdf
+output/cvs/*.html
 output/reports/*.json
 output/logs/*.log
+output/web/*.yaml
+output/web/*.tmp
 .chroma/
 *.db
 

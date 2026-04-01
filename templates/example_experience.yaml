@@ -1,0 +1,100 @@
+# Example Experience YAML - Based on your background
+# Use this as a template for your experience
+
+personal_info:
+  name: "Your Name"
+  email: "your.email@example.com"
+  phone: "+49 123 4567890"
+  location: "Nuremberg, Germany"
+  linkedin: "linkedin.com/in/yourprofile"
+  github: "github.com/yourusername"
+
+experience:
+  - company: "Nokia Networks"
+    role: "Dual Student - Data Analytics & Software Development"
+    start_date: "2022-09"
+    end_date: "2025-09"
+    location: "Nuremberg, Germany"
+    achievements:
+      - "Supported agile software teams working on optical transmission systems in Linux-based embedded environment"
+      - "Developed Python scripts for automated data collection, processing, and analytics to support engineering decisions"
+      - "Prepared dashboards, reports, and technical presentations for management and cross-functional stakeholders"
+      - "Contributed to backlog maintenance and task prioritization within engineering teams"
+      - "Maintained and optimized CI/CD workflows and static code analysis pipelines (Coverity, Cppcheck)"
+    technologies:
+      - "Python"
+      - "JavaScript"
+      - "Splunk"
+      - "Excel"
+      - "Git"
+      - "Linux"
+      - "C/C++"
+      - "C#"
+      - "Java"
+
+  - company: "Nokia Japan"
+    role: "Intern - Customer Engineering"
+    start_date: "2024-08"
+    end_date: "2024-11"
+    location: "Tokyo, Japan"
+    achievements:
+      - "Collaborated with engineering teams in Japan and Finland on customer-facing network infrastructure projects"
+      - "Created technical documentation, network visualizations, and onboarding material for enterprise clients"
+      - "Assisted with coordination and communication across distributed teams"
+    technologies:
+      - "NetBox"
+      - "Network Management"
+      - "Documentation"
+
+projects:
+  - name: "SugarIQ - AI-powered Diabetes Management Platform"
+    description: "Healthcare Hackathon Bavaria - 1st Place"
+    date: "2025-10"
+    details:
+      - "Built a clinical decision-support platform enabling doctors and patients to interact more efficiently with health data"
+      - "Integrated AWS Transcribe for automated transcription of medical consultations"
+      - "Implemented a RAG-based chatbot using patient records and conversation transcripts as real-time context"
+      - "Responsible for project documentation, workflow planning, and presentation of results to judges and stakeholders"
+    technologies:
+      - "Python"
+      - "AWS (Transcribe, Bedrock)"
+      - "React"
+      - "LangChain"
+      - "Node.js"
+
+  - name: "TumorBoard Assistant - AI-based Oncology Decision Support"
+    description: "Agaplesion Agathon Hackathon - 2nd Place"
+    date: "2025-10"
+    details:
+      - "Developed an AI system to extract, summarize, and contextualize cancer patient data for tumor board meetings"
+      - "Built a vector database grounded in German oncology guidelines for evidence-based recommendations"
+      - "Implemented an autonomous agent-based workflow for literature search, guideline retrieval, and treatment suggestions"
+      - "Managed documentation and supported task planning during the hackathon team workflow"
+    technologies:
+      - "Python"
+      - "OpenAI"
+      - "LangChain"
+      - "React"
+
+education:
+  - institution: "Your University"
+    degree: "Your Degree"
+    field_of_study: "Your Field"
+    graduation_date: "2025"
+
+skills:
+  - "Python"
+  - "JavaScript"
+  - "C/C++"
+  - "C#"
+  - "Java"
+  - "Linux"
+  - "Git"
+  - "AWS"
+  - "LangChain"
+  - "React"
+  - "Node.js"
+  - "Splunk"
+  - "Data Analytics"
+  - "CI/CD"
+  - "Agile Engineering"

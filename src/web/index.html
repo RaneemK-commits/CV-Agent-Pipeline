@@ -294,8 +294,26 @@
                     <textarea 
                         id="experience" 
                         name="experience"
-                        placeholder="Paste your experience YAML here, or upload a file..."
+                        placeholder="personal_info:
+  name: &quot;Your Name&quot;
+  email: &quot;your.email@example.com&quot;
+  phone: &quot;+1 234 567 8900&quot;
+
+experience:
+  - company: &quot;Company Name&quot;
+    role: &quot;Your Role&quot;
+    start_date: &quot;2020-01&quot;
+    achievements:
+      - &quot;Achievement 1&quot;
+      - &quot;Achievement 2&quot;
+
+skills:
+  - &quot;Python&quot;
+  - &quot;AWS&quot;"
                     ></textarea>
+                    <small style="color: #999; display: block; margin-top: 5px;">
+                        💡 Tip: Leave empty to use the default template, or upload a YAML file below
+                    </small>
                 </div>
 
                 <div class="form-group">

@@ -102,9 +102,21 @@ async def generate_cv_background(
         # Create orchestrator
         orchestrator = PipelineOrchestrator(config)
         
-        # Determine experience file
-        if experience_file is None:
+        # Determine experience file - use default if not provided or invalid
+        if experience_file is None or not experience_file.exists():
             experience_file = Path("templates/test_experience.yaml")
+        else:
+            # Validate YAML format
+            try:
+                import yaml
+                with open(experience_file, 'r') as f:
+                    yaml.safe_load(f)
+            except yaml.YAMLError as e:
+                logger.warning(f"Invalid YAML in experience file: {e}")
+                tasks[task_id]["error"] = f"Invalid YAML format: {str(e)[:200]}"
+                tasks[task_id]["status"] = "failed"
+                tasks[task_id]["completed_at"] = datetime.now().isoformat()
+                return
         
         tasks[task_id]["progress"] = 30
         tasks[task_id]["current_step"] = "Scraping job posting..."
