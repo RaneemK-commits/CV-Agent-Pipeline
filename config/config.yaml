@@ -1,0 +1,37 @@
+# config/config.yaml
+pipeline:
+  name: "CV Agent Pipeline"
+  version: "0.1.0"
+  
+  # Input/Output paths
+  paths:
+    user_experience: "templates/user_experience.yaml"
+    output_dir: "output"
+    cvs_dir: "output/cvs"
+    reports_dir: "output/reports"
+    logs_dir: "output/logs"
+    
+  # Pipeline behavior
+  behavior:
+    max_refinement_iterations: 3
+    store_to_vector_db: true
+    generate_score_report: true
+    
+  # Scraping settings
+  scraping:
+    user_agent: "Mozilla/5.0 (compatible; CVAgentBot/1.0)"
+    request_timeout: 10
+    retry_count: 3
+    
+  # Rendering settings
+  rendering:
+    page_size: "A4"
+    margin_top: "20mm"
+    margin_bottom: "20mm"
+    margin_left: "15mm"
+    margin_right: "15mm"
+    
+logging:
+  level: "INFO"
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}"
+  file: "output/logs/pipeline.log"

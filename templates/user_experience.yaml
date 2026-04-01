@@ -1,0 +1,116 @@
+# User Experience Template
+# Fill in your information below. This file will be used to generate your CV.
+# Fields marked with * are required.
+
+personal_info:
+  # Your full name as you want it on the CV
+  name: "John Doe"
+  
+  # Email address
+  email: "john.doe@email.com"
+  
+  # Phone number with country code
+  phone: "+44 7700 900000"
+  
+  # Location (city, country)
+  location: "London, UK"
+  
+  # LinkedIn profile URL (optional)
+  linkedin: "linkedin.com/in/johndoe"
+  
+  # GitHub profile URL (optional)
+  github: "github.com/johndoe"
+  
+  # Personal website (optional)
+  website: ""
+
+# Work experience - list in reverse chronological order (most recent first)
+experience:
+  - company: "Tech Corp Ltd"
+    role: "Senior Software Engineer"
+    start_date: "2020-01"  # Format: YYYY-MM
+    end_date: "Present"     # Use "Present" for current role or YYYY-MM for past roles
+    location: "London, UK"
+    
+    # Your key achievements in this role - be specific and quantify where possible
+    achievements:
+      - "Led a team of 5 developers to deliver a microservices platform serving 100k+ daily users"
+      - "Reduced API response time by 40% through caching and query optimization"
+      - "Implemented CI/CD pipeline reducing deployment time from 2 hours to 15 minutes"
+      - "Mentored 3 junior developers who were promoted within 18 months"
+    
+    # Technologies you used in this role
+    technologies:
+      - "Python"
+      - "AWS (EC2, Lambda, S3, RDS)"
+      - "Docker"
+      - "Kubernetes"
+      - "PostgreSQL"
+      - "Redis"
+
+  - company: "Digital Solutions Inc"
+    role: "Software Engineer"
+    start_date: "2017-06"
+    end_date: "2019-12"
+    location: "Manchester, UK"
+    
+    achievements:
+      - "Developed RESTful APIs serving 50k+ requests per day"
+      - "Built responsive web applications using React and TypeScript"
+      - "Collaborated with product team to define requirements and deliverables"
+      - "Improved test coverage from 40% to 85%"
+    
+    technologies:
+      - "JavaScript"
+      - "TypeScript"
+      - "React"
+      - "Node.js"
+      - "MongoDB"
+      - "Jest"
+
+# Education history - list in reverse chronological order
+education:
+  - institution: "University of London"
+    degree: "MSc Computer Science"
+    field_of_study: "Artificial Intelligence"
+    graduation_date: "2016-07"
+    grade: "Distinction"  # Optional
+  
+  - institution: "University of Manchester"
+    degree: "BSc Computer Science"
+    field_of_study: ""
+    graduation_date: "2015-06"
+    grade: "First Class Honours"
+
+# Technical skills - group related skills together
+skills:
+  - "Python"
+  - "JavaScript"
+  - "TypeScript"
+  - "AWS"
+  - "Docker"
+  - "Kubernetes"
+  - "PostgreSQL"
+  - "MongoDB"
+  - "React"
+  - "Node.js"
+  - "CI/CD"
+  - "Agile/Scrum"
+
+# Certifications (optional)
+certifications:
+  - "AWS Certified Solutions Architect - Associate (2022)"
+  - "Certified Kubernetes Administrator (2021)"
+
+# Personal projects (optional) - great for showcasing skills
+projects:
+  - name: "Open Source Contributor"
+    description: "Active contributor to popular Python web framework"
+    url: "github.com/johndoe/framework"
+  
+  - name: "Personal Blog"
+    description: "Tech blog with 10k+ monthly readers"
+    url: "johndoe.dev/blog"
+
+# Professional summary (optional) - if not provided, AI will generate one tailored to each job
+# summary: "Senior Software Engineer with 6+ years of experience building scalable web applications..."

@@ -1,0 +1,36 @@
+# config/providers.yaml
+providers:
+  mock:
+    enabled: false
+    default_model: "mock-model"
+    
+  ollama:
+    enabled: true
+    base_url: "http://localhost:11434"
+    default_model: "llama3:8b"
+    embedding_model: "nomic-embed-text"
+    
+  openai:
+    enabled: false
+    api_key_env: "OPENAI_API_KEY"
+    default_model: "gpt-4o"
+    embedding_model: "text-embedding-3-small"
+    
+  anthropic:
+    enabled: false
+    api_key_env: "ANTHROPIC_API_KEY"
+    default_model: "claude-3-sonnet-20240229"
+    
+  groq:
+    enabled: false
+    api_key_env: "GROQ_API_KEY"
+    default_model: "llama3-70b-8192"
+    
+  mistral:
+    enabled: false
+    api_key_env: "MISTRAL_API_KEY"
+    default_model: "mistral-large-latest"
+
+fallback_chain:
+  - ollama
+  - mock

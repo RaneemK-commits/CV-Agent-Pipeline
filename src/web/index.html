@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Agent Pipeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 20px;
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .cv-preview {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+            margin-top: 20px;
+        }
+
+        .cv-preview iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c00;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #0a0;
+            border: 1px solid #cfc;
+        }
+
+        .history-list {
+            list-style: none;
+        }
+
+        .history-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:hover {
+            border-color: #667eea;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            width: auto;
+            display: inline-block;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 8px 8px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 CV Agent Pipeline</h1>
+            <p>Generate tailored, professional CVs using AI agents</p>
+        </div>
+
+        <div class="card">
+            <h2>Generate New CV</h2>
+            
+            <div id="error-alert" class="alert alert-error" style="display: none;"></div>
+            <div id="success-alert" class="alert alert-success" style="display: none;"></div>
+
+            <form id="cv-form">
+                <div class="form-group">
+                    <label for="job_url">Job Posting URL *</label>
+                    <input 
+                        type="url" 
+                        id="job_url" 
+                        name="job_url" 
+                        placeholder="https://www.indeed.com/viewjob?jk=..."
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Your Experience (YAML format, optional)</label>
+                    <textarea 
+                        id="experience" 
+                        name="experience"
+                        placeholder="Paste your experience YAML here, or upload a file..."
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience_file">Or Upload Experience File</label>
+                    <input 
+                        type="file" 
+                        id="experience_file" 
+                        name="experience"
+                        accept=".yaml,.yml"
+                    >
+                </div>
+
+                <button type="submit" class="btn" id="submit-btn">
+                    🚀 Generate CV
+                </button>
+            </form>
+
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Starting...</div>
+            </div>
+
+            <div class="result-container" id="result-container">
+                <h3>✅ CV Generated Successfully!</h3>
+                
+                <div class="score-grid">
+                    <div class="score-card">
+                        <div class="score-value" id="ats-score">-</div>
+                        <div class="score-label">ATS Score</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value" id="job-fit-score">-</div>
+                        <div class="score-label">Job Fit Score</div>
+                    </div>
+                </div>
+
+                <div class="cv-preview">
+                    <h3>CV Preview</h3>
+                    <iframe id="cv-preview-frame" src=""></iframe>
+                </div>
+
+                <a id="download-cv" class="btn btn-small" style="margin-top: 20px; text-decoration: none; display: inline-block;">
+                    📥 Download CV
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('history')">Generation History</button>
+                <button class="tab" onclick="switchTab('cvs')">All CVs</button>
+            </div>
+
+            <div id="history-tab" class="tab-content active">
+                <ul class="history-list" id="history-list">
+                    <li style="text-align: center; color: #999;">No generations yet</li>
+                </ul>
+            </div>
+
+            <div id="cvs-tab" class="tab-content">
+                <ul class="history-list" id="cvs-list">
+                    <li style="text-align: center; color: #999;">Loading...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTaskId = null;
+        const generatedCVs = [];
+
+        // Form submission
+        document.getElementById('cv-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const jobUrl = document.getElementById('job_url').value;
+            const experienceText = document.getElementById('experience').value;
+            const experienceFile = document.getElementById('experience_file').files[0];
+            
+            // Hide previous results
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('error-alert').style.display = 'none';
+            document.getElementById('success-alert').style.display = 'none';
+            
+            // Show progress
+            document.getElementById('progress-container').style.display = 'block';
+            document.getElementById('submit-btn').disabled = true;
+            
+            try {
+                // Create form data
+                const formData = new FormData();
+                formData.append('job_url', jobUrl);
+                if (experienceText) {
+                    const blob = new Blob([experienceText], { type: 'text/yaml' });
+                    formData.append('experience', blob, 'experience.yaml');
+                } else if (experienceFile) {
+                    formData.append('experience', experienceFile);
+                }
+                
+                // Start generation
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    body: formData,
+                });
+                
+                const result = await response.json();
+                currentTaskId = result.task_id;
+                
+                // Poll for status
+                pollTaskStatus(currentTaskId);
+                
+            } catch (error) {
+                showError('Failed to start CV generation: ' + error.message);
+                document.getElementById('submit-btn').disabled = false;
+                document.getElementById('progress-container').style.display = 'none';
+            }
+        });
+
+        // Poll task status
+        async function pollTaskStatus(taskId) {
+            const pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/tasks/${taskId}`);
+                    const status = await response.json();
+                    
+                    // Update progress
+                    document.getElementById('progress-fill').style.width = status.progress + '%';
+                    document.getElementById('progress-text').textContent = status.current_step || 'Processing...';
+                    
+                    if (status.status === 'completed') {
+                        clearInterval(pollInterval);
+                        showResult(status);
+                        addToHistory(status);
+                        document.getElementById('submit-btn').disabled = false;
+                    } else if (status.status === 'failed') {
+                        clearInterval(pollInterval);
+                        showError(status.error || 'Generation failed');
+                        document.getElementById('submit-btn').disabled = false;
+                        document.getElementById('progress-container').style.display = 'none';
+                    }
+                } catch (error) {
+                    clearInterval(pollInterval);
+                    showError('Failed to check status: ' + error.message);
+                    document.getElementById('submit-btn').disabled = false;
+                    document.getElementById('progress-container').style.display = 'none';
+                }
+            }, 2000);
+        }
+
+        // Show result
+        function showResult(status) {
+            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            
+            document.getElementById('ats-score').textContent = status.ats_score || '-';
+            document.getElementById('job-fit-score').textContent = status.job_fit_score || '-';
+            
+            const cvPath = status.html_path || status.cv_path;
+            if (cvPath) {
+                document.getElementById('cv-preview-frame').src = cvPath;
+                document.getElementById('download-cv').href = cvPath;
+            }
+            
+            showSuccess('CV generated successfully!');
+        }
+
+        // Show error
+        function showError(message) {
+            const alert = document.getElementById('error-alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+        }
+
+        // Show success
+        function showSuccess(message) {
+            const alert = document.getElementById('success-alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+        }
+
+        // Add to history
+        function addToHistory(status) {
+            generatedCVs.unshift({
+                task_id: status.task_id,
+                created_at: status.created_at,
+                ats_score: status.ats_score,
+                job_fit_score: status.job_fit_score,
+                cv_path: status.html_path || status.cv_path,
+            });
+            renderHistory();
+        }
+
+        // Render history
+        function renderHistory() {
+            const historyList = document.getElementById('history-list');
+            if (generatedCVs.length === 0) {
+                historyList.innerHTML = '<li style="text-align: center; color: #999;">No generations yet</li>';
+                return;
+            }
+            
+            historyList.innerHTML = generatedCVs.map(cv => `
+                <li class="history-item">
+                    <div class="history-info">
+                        <strong>CV Generated</strong>
+                        <div class="history-date">${new Date(cv.created_at).toLocaleString()}</div>
+                        <div>ATS: ${cv.ats_score || '-'} | Job Fit: ${cv.job_fit_score || '-'}</div>
+                    </div>
+                    <a href="${cv.cv_path}" target="_blank" class="btn btn-small">View</a>
+                </li>
+            `).join('');
+        }
+
+        // Load all CVs
+        async function loadCVs() {
+            try {
+                const response = await fetch('/api/cvs');
+                const cvs = await response.json();
+                
+                const cvsList = document.getElementById('cvs-list');
+                if (cvs.length === 0) {
+                    cvsList.innerHTML = '<li style="text-align: center; color: #999;">No CVs found</li>';
+                    return;
+                }
+                
+                cvsList.innerHTML = cvs.map(cv => `
+                    <li class="history-item">
+                        <div class="history-info">
+                            <strong>${cv.filename}</strong>
+                            <div class="history-date">${new Date(cv.created_at).toLocaleString()}</div>
+                        </div>
+                        <a href="${cv.path}" target="_blank" class="btn btn-small">View</a>
+                    </li>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load CVs:', error);
+            }
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            if (tabName === 'cvs') {
+                loadCVs();
+            }
+        }
+
+        // Load CVs on page load
+        loadCVs();
+    </script>
+</body>
+</html>

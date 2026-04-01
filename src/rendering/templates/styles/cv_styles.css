@@ -1,0 +1,234 @@
+/* CV Styles for WeasyPrint PDF Generation */
+
+@page {
+    size: A4;
+    margin: 20mm;
+    
+    @bottom-center {
+        content: "Page " counter(page);
+        font-size: 9pt;
+        color: #666;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #333;
+    background: #fff;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 20pt;
+    border-bottom: 2pt solid #2c3e50;
+    padding-bottom: 15pt;
+}
+
+.name {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.contact-info {
+    font-size: 9.5pt;
+    color: #555;
+    margin-bottom: 5pt;
+}
+
+.contact-item {
+    display: inline;
+}
+
+.contact-separator {
+    color: #999;
+    margin: 0 8pt;
+}
+
+.contact-links {
+    font-size: 9.5pt;
+    color: #3498db;
+}
+
+.contact-link {
+    display: inline;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 18pt;
+}
+
+.section-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+    border-bottom: 1pt solid #ecf0f1;
+    padding-bottom: 5pt;
+    margin-bottom: 12pt;
+}
+
+/* Summary */
+.summary {
+    text-align: justify;
+    color: #444;
+}
+
+/* Experience */
+.experience-item {
+    margin-bottom: 14pt;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.experience-title {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.experience-date {
+    font-size: 9.5pt;
+    color: #7f8c8d;
+    white-space: nowrap;
+}
+
+.experience-company {
+    font-size: 10pt;
+    color: #3498db;
+    margin-bottom: 5pt;
+}
+
+.achievements {
+    list-style-type: disc;
+    margin-left: 15pt;
+    margin-bottom: 5pt;
+}
+
+.achievement {
+    margin-bottom: 3pt;
+    text-align: justify;
+}
+
+.technologies {
+    font-size: 9pt;
+    color: #666;
+    font-style: italic;
+}
+
+.technologies-label {
+    font-weight: bold;
+}
+
+/* Education */
+.education-item {
+    margin-bottom: 10pt;
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.education-degree {
+    font-size: 10.5pt;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.education-date {
+    font-size: 9.5pt;
+    color: #7f8c8d;
+    white-space: nowrap;
+}
+
+.education-institution {
+    font-size: 10pt;
+    color: #3498db;
+}
+
+/* Skills */
+.skills-list {
+    font-size: 10pt;
+    color: #444;
+    text-align: justify;
+}
+
+/* Certifications */
+.certifications-list {
+    list-style-type: disc;
+    margin-left: 15pt;
+}
+
+.certification {
+    margin-bottom: 3pt;
+}
+
+/* Projects */
+.project-item {
+    margin-bottom: 10pt;
+}
+
+.project-name {
+    font-size: 10.5pt;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.project-description {
+    font-size: 10pt;
+    color: #444;
+    margin-bottom: 2pt;
+}
+
+.project-url {
+    font-size: 9pt;
+    color: #3498db;
+    font-style: italic;
+}
+
+/* Footer */
+.footer {
+    margin-top: 30pt;
+    padding-top: 10pt;
+    border-top: 1pt solid #ecf0f1;
+    text-align: center;
+    font-size: 8pt;
+    color: #999;
+}
+
+.footer p {
+    font-style: italic;
+}
+
+/* Print optimizations */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+}

@@ -1,0 +1,68 @@
+# Test User Experience - For Mock Testing
+
+personal_info:
+  name: "Alex Johnson"
+  email: "alex.johnson@email.com"
+  phone: "+44 7700 900123"
+  location: "London, UK"
+  linkedin: "linkedin.com/in/alexjohnson"
+  github: "github.com/alexjohnson"
+
+experience:
+  - company: "Tech Corp"
+    role: "Senior Software Engineer"
+    start_date: "2020-01"
+    end_date: "Present"
+    location: "London, UK"
+    achievements:
+      - "Led team of 5 developers to deliver microservices platform"
+      - "Reduced API latency by 40% through optimization"
+      - "Implemented CI/CD pipeline reducing deployment time by 80%"
+    technologies:
+      - "Python"
+      - "AWS"
+      - "Docker"
+      - "Kubernetes"
+
+  - company: "Digital Solutions"
+    role: "Software Engineer"
+    start_date: "2017-06"
+    end_date: "2019-12"
+    location: "Manchester, UK"
+    achievements:
+      - "Developed RESTful APIs serving 50k+ daily requests"
+      - "Built responsive web applications using React"
+      - "Improved test coverage from 40% to 85%"
+    technologies:
+      - "JavaScript"
+      - "TypeScript"
+      - "React"
+      - "Node.js"
+
+education:
+  - institution: "University of London"
+    degree: "MSc Computer Science"
+    field_of_study: "Artificial Intelligence"
+    graduation_date: "2016-07"
+    grade: "Distinction"
+
+  - institution: "University of Manchester"
+    degree: "BSc Computer Science"
+    graduation_date: "2015-06"
+    grade: "First Class Honours"
+
+skills:
+  - "Python"
+  - "JavaScript"
+  - "TypeScript"
+  - "AWS"
+  - "Docker"
+  - "Kubernetes"
+  - "PostgreSQL"
+  - "React"
+  - "Node.js"
+  - "CI/CD"
+
+certifications:
+  - "AWS Certified Solutions Architect - Associate (2022)"
+  - "Certified Kubernetes Administrator (2021)"

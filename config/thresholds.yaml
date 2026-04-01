@@ -1,0 +1,18 @@
+# config/thresholds.yaml
+scoring:
+  ats:
+    minimum_score: 80
+    critical_checks:
+      - "contact_info_present"
+      - "standard_headings"
+      - "no_images_in_content"
+      - "text_selectable"
+      
+  job_fit:
+    minimum_score: 75
+    required_skill_match_percentage: 60
+    
+refinement:
+  trigger_below_threshold: true
+  max_iterations: 3
+  improvement_target: 10  # Aim for 10% improvement per iteration
