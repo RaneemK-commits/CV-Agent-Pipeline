@@ -16,6 +16,8 @@ from loguru import logger
 
 from src.utils.config_loader import load_config
 from src.pipeline.orchestrator import PipelineOrchestrator
+from src.agents.cv_parser_agent import CVParserAgent, parse_cv_file
+from src.providers.provider_manager import ProviderManager, ProviderConfig
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -160,18 +162,83 @@ async def root():
 @app.post("/api/generate", response_model=CVGenerationResponse)
 async def generate_cv(
     job_url: str = Form(...),
-    experience: Optional[UploadFile] = File(None),
+    experience_text: Optional[str] = Form(None),
+    cv_file: Optional[UploadFile] = File(None),
+    experience_file: Optional[UploadFile] = File(None),
     max_iterations: int = Form(3),
 ):
-    """Generate a tailored CV for a job posting."""
+    """Generate a tailored CV for a job posting.
+    
+    Accepts experience in three forms:
+    1. Plain text (experience_text) - will be parsed by AI
+    2. CV file (PDF/DOCX/TXT) - will be parsed
+    3. YAML experience file - used directly
+    """
     task_id = f"task_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     
-    # Save uploaded experience file if provided
-    experience_file = None
-    if experience:
-        experience_file = OUTPUT_DIR / f"{task_id}_experience.yaml"
-        content = await experience.read()
-        experience_file.write_bytes(content)
+    # Determine experience source and prepare file
+    experience_file_path = None
+    
+    try:
+        # Option 1: CV upload (PDF, DOCX, TXT)
+        if cv_file and cv_file.filename:
+            logger.info(f"Processing uploaded CV: {cv_file.filename}")
+            cv_path = OUTPUT_DIR / f"{task_id}_cv{Path(cv_file.filename).suffix}"
+            content = await cv_file.read()
+            cv_path.write_bytes(content)
+            
+            # Parse the CV
+            config = load_config(Path("config/config.yaml"))
+            providers_config = config.get("providers", {}).get("providers", {})
+            provider_manager = ProviderManager(providers_config, ["ollama"])
+            await provider_manager.initialize_all()
+            
+            cv_parser = CVParserAgent(provider_manager)
+            parsed_data = parse_cv_file(cv_path, cv_parser)
+            
+            # Save as YAML
+            import yaml
+            experience_file_path = OUTPUT_DIR / f"{task_id}_experience.yaml"
+            with open(experience_file_path, 'w') as f:
+                yaml.dump(parsed_data, f, default_flow_style=False, allow_unicode=True)
+            
+            await provider_manager.close_all()
+        
+        # Option 2: Plain text experience
+        elif experience_text and experience_text.strip():
+            logger.info("Processing plain text experience")
+            # Save text temporarily for parsing
+            text_path = OUTPUT_DIR / f"{task_id}_text.txt"
+            text_path.write_text(experience_text)
+            
+            # Parse the text
+            config = load_config(Path("config/config.yaml"))
+            providers_config = config.get("providers", {}).get("providers", {})
+            provider_manager = ProviderManager(providers_config, ["ollama"])
+            await provider_manager.initialize_all()
+            
+            cv_parser = CVParserAgent(provider_manager)
+            parsed_data = await cv_parser.execute(experience_text, source_type="text")
+            
+            # Save as YAML
+            import yaml
+            experience_file_path = OUTPUT_DIR / f"{task_id}_experience.yaml"
+            with open(experience_file_path, 'w') as f:
+                yaml.dump(parsed_data, f, default_flow_style=False, allow_unicode=True)
+            
+            await provider_manager.close_all()
+        
+        # Option 3: YAML experience file
+        elif experience_file and experience_file.filename:
+            logger.info(f"Processing YAML experience file: {experience_file.filename}")
+            experience_file_path = OUTPUT_DIR / f"{task_id}_experience.yaml"
+            content = await experience_file.read()
+            experience_file_path.write_bytes(content)
+    
+    except Exception as e:
+        logger.error(f"Failed to process experience input: {e}")
+        # Fall back to default template
+        experience_file_path = None
     
     # Create task
     tasks[task_id] = {
@@ -192,7 +259,7 @@ async def generate_cv(
     asyncio.create_task(generate_cv_background(
         task_id,
         job_url,
-        experience_file,
+        experience_file_path,
     ))
     
     return CVGenerationResponse(

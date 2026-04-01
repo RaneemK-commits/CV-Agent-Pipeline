@@ -7,6 +7,7 @@ from src.agents.renderer_agent import RendererAgent
 from src.agents.ats_scorer_agent import ATSScorerAgent
 from src.agents.job_fit_scorer_agent import JobFitScorerAgent
 from src.agents.refiner_agent import RefinerAgent
+from src.agents.cv_parser_agent import CVParserAgent
 
 __all__ = [
     "BaseAgent",
@@ -17,4 +18,5 @@ __all__ = [
     "ATSScorerAgent",
     "JobFitScorerAgent",
     "RefinerAgent",
+    "CVParserAgent",
 ]

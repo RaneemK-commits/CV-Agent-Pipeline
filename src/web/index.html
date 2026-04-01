@@ -290,40 +290,75 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="experience">Your Experience (YAML format, optional)</label>
-                    <textarea 
-                        id="experience" 
-                        name="experience"
-                        placeholder="personal_info:
-  name: &quot;Your Name&quot;
-  email: &quot;your.email@example.com&quot;
-  phone: &quot;+1 234 567 8900&quot;
+                    <label>📄 Your Experience (Choose ONE option)</label>
+                    
+                    <div style="margin: 15px 0;">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px;">
+                            Option 1: Paste Your Experience as Plain Text
+                        </label>
+                        <textarea 
+                            id="experience_text" 
+                            name="experience_text"
+                            placeholder="Just paste your CV/resume text here, or write your experience in plain English...
 
-experience:
-  - company: &quot;Company Name&quot;
-    role: &quot;Your Role&quot;
-    start_date: &quot;2020-01&quot;
-    achievements:
-      - &quot;Achievement 1&quot;
-      - &quot;Achievement 2&quot;
+Example:
+John Doe
+Software Engineer
+john@example.com | +1 234 567 8900
 
-skills:
-  - &quot;Python&quot;
-  - &quot;AWS&quot;"
-                    ></textarea>
-                    <small style="color: #999; display: block; margin-top: 5px;">
-                        💡 Tip: Leave empty to use the default template, or upload a YAML file below
-                    </small>
-                </div>
+EXPERIENCE
+Senior Developer at Tech Corp (2020-Present)
+- Led team of 5 developers
+- Built microservices platform
+- Technologies: Python, AWS, Docker
 
-                <div class="form-group">
-                    <label for="experience_file">Or Upload Experience File</label>
-                    <input 
-                        type="file" 
-                        id="experience_file" 
-                        name="experience"
-                        accept=".yaml,.yml"
-                    >
+Developer at StartupXYZ (2018-2020)
+- Developed web applications
+- Technologies: JavaScript, React, Node.js
+
+EDUCATION
+MSc Computer Science, University Name (2018)
+
+SKILLS
+Python, JavaScript, AWS, Docker, Kubernetes, React"
+                        ></textarea>
+                    </div>
+
+                    <div style="text-align: center; margin: 10px 0; color: #999;">— OR —</div>
+
+                    <div style="margin: 15px 0;">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px;">
+                            Option 2: Upload Your CV/Resume (PDF, DOCX, or TXT)
+                        </label>
+                        <input 
+                            type="file" 
+                            id="cv_file" 
+                            name="cv_file"
+                            accept=".pdf,.docx,.doc,.txt"
+                            style="padding: 10px; border: 2px dashed #ddd; border-radius: 8px; width: 100%;"
+                        >
+                        <small style="color: #999; display: block; margin-top: 5px;">
+                            📎 We'll automatically extract your information
+                        </small>
+                    </div>
+
+                    <div style="text-align: center; margin: 10px 0; color: #999;">— OR —</div>
+
+                    <div style="margin: 15px 0;">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px;">
+                            Option 3: Upload YAML Experience File
+                        </label>
+                        <input 
+                            type="file" 
+                            id="experience_file" 
+                            name="experience_file"
+                            accept=".yaml,.yml"
+                            style="padding: 10px; border: 2px dashed #ddd; border-radius: 8px; width: 100%;"
+                        >
+                        <small style="color: #999; display: block; margin-top: 5px;">
+                            📝 For advanced users with pre-formatted YAML
+                        </small>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn" id="submit-btn">
@@ -392,8 +427,15 @@ skills:
             e.preventDefault();
             
             const jobUrl = document.getElementById('job_url').value;
-            const experienceText = document.getElementById('experience').value;
+            const experienceText = document.getElementById('experience_text').value;
+            const cvFile = document.getElementById('cv_file').files[0];
             const experienceFile = document.getElementById('experience_file').files[0];
+            
+            // Validate that at least one experience option is provided
+            if (!experienceText && !cvFile && !experienceFile) {
+                showError('Please provide your experience: paste text, upload a CV, or upload a YAML file');
+                return;
+            }
             
             // Hide previous results
             document.getElementById('result-container').style.display = 'none';
@@ -408,11 +450,17 @@ skills:
                 // Create form data
                 const formData = new FormData();
                 formData.append('job_url', jobUrl);
+                
                 if (experienceText) {
-                    const blob = new Blob([experienceText], { type: 'text/yaml' });
-                    formData.append('experience', blob, 'experience.yaml');
-                } else if (experienceFile) {
-                    formData.append('experience', experienceFile);
+                    formData.append('experience_text', experienceText);
+                }
+                
+                if (cvFile) {
+                    formData.append('cv_file', cvFile);
+                }
+                
+                if (experienceFile) {
+                    formData.append('experience_file', experienceFile);
                 }
                 
                 // Start generation
